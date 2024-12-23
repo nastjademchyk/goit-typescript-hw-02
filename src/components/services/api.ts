@@ -1,17 +1,8 @@
 import axios from "axios";
+import { Image } from "../../types";
 
 axios.defaults.baseURL = "https://api.unsplash.com";
 const ACCESS_KEY = "FptwxiChC5Bm_nYApjuu2BDwgNSfw5yahjVJ1hijrXE";
-
-interface Image {
-  id: string;
-  urls: {
-    small: string;
-    regular: string;
-  };
-  description: string;
-  likes: number;
-}
 
 export interface FetchImagesResponse {
   success: boolean;

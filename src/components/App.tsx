@@ -8,6 +8,7 @@ import ImageGallery from "./ImageGallery/ImageGallery";
 import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import ImageModal from "./ImageModal/ImageModal";
 import { Toaster, toast } from "react-hot-toast";
+import { Image } from "../types";
 
 function App() {
   const [loader, setLoader] = useState<boolean>(false);
@@ -19,16 +20,6 @@ function App() {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const [totalPages, setTotalPages] = useState<number>(0);
-
-  interface Image {
-    id: string;
-    urls: {
-      small: string;
-      regular: string;
-    };
-    description: string;
-    likes: number;
-  }
 
   const handleImageSubmit = async (query: string): Promise<void> => {
     setImages([]);

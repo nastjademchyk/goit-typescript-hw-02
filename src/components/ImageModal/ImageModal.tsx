@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import Modal from "react-modal";
 import { FcLike } from "react-icons/fc";
+import { Image } from "../../types";
 
 Modal.setAppElement("#root");
 
@@ -19,15 +20,6 @@ const customStyles = {
     border: "none",
   },
 };
-
-interface Image {
-  urls: {
-    small: string;
-    regular: string;
-  };
-  description: string;
-  likes: number;
-}
 
 interface ImageModalProps {
   image?: Image | null;

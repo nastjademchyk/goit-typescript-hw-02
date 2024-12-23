@@ -1,16 +1,7 @@
 import React, { FC } from "react";
 import ImageCard from "../ImageCard/ImageCard";
 import s from "./ImageGallery.module.css";
-
-interface Image {
-  id: string;
-  urls: {
-    small: string;
-    regular: string;
-  };
-  description: string;
-  likes: number;
-}
+import { Image } from "../../types";
 
 interface ImageGalleryProps {
   images: Image[];
