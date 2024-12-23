@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef, FormEvent } from "react";
+import React, { FC, useState, useRef, FormEvent, ChangeEvent } from "react";
 import s from "./SearchBar.module.css";
 import { MdOutlineImageSearch } from "react-icons/md";
 import toast, { Toaster } from "react-hot-toast";
@@ -10,7 +10,7 @@ interface SearchBarProps {
 const SearchBar: FC<SearchBarProps> = ({ onSubmit }) => {
   const [query, setQuery] = useState<string>("");
   const formRef = useRef<HTMLFormElement | null>(null);
-  const handleChange = (evt: FormEvent<HTMLInputElement>) => {
+  const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setQuery(evt.currentTarget.value);
   };
 
