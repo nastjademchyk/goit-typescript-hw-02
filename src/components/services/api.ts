@@ -10,6 +10,11 @@ export interface FetchImagesResponse {
   totalPages: number;
 }
 
+interface ApiResponse {
+  results: Image[];
+  total: number;
+}
+
 export const fetchImages = async (
   query: string,
   page: number
@@ -23,7 +28,7 @@ export const fetchImages = async (
     };
   }
   try {
-    const response = await axios.get("/search/photos", {
+    const response = await axios.get<ApiResponse>("/search/photos", {
       params: {
         query,
         client_id: ACCESS_KEY,

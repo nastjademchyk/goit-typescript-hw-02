@@ -1,12 +1,6 @@
 import React, { FC } from "react";
 import s from "./ImageCard.module.css";
-
-interface Image {
-  urls: {
-    small: string;
-  };
-  description?: string;
-}
+import { Image } from "../../types";
 
 interface ImageCardProps {
   image: Image;
