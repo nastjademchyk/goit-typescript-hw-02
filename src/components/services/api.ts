@@ -3,7 +3,26 @@ import axios from "axios";
 axios.defaults.baseURL = "https://api.unsplash.com";
 const ACCESS_KEY = "FptwxiChC5Bm_nYApjuu2BDwgNSfw5yahjVJ1hijrXE";
 
-export const fetchImages = async (query, page) => {
+interface Image {
+  id: string;
+  urls: {
+    small: string;
+    regular: string;
+  };
+  description: string;
+  likes: number;
+}
+
+export interface FetchImagesResponse {
+  success: boolean;
+  images: Image[];
+  totalPages: number;
+}
+
+export const fetchImages = async (
+  query: string,
+  page: number
+): Promise<FetchImagesResponse> => {
   if (!query || query.trim() === "") {
     console.error("Query cannot be empty");
     return {
@@ -27,7 +46,7 @@ export const fetchImages = async (query, page) => {
     });
     return {
       success: true,
-      images: response.data.results.map((image) => ({
+      images: response.data.results.map((image: Image) => ({
         id: image.id,
         urls: image.urls,
         description: image.description,

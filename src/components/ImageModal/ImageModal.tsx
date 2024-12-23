@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import Modal from "react-modal";
 import { FcLike } from "react-icons/fc";
 
@@ -20,7 +20,26 @@ const customStyles = {
   },
 };
 
-const ImageModal = ({ modalIsOpen, onRequestClose, image }) => {
+interface Image {
+  urls: {
+    small: string;
+    regular: string;
+  };
+  description: string;
+  likes: number;
+}
+
+interface ImageModalProps {
+  image?: Image | null;
+  modalIsOpen: boolean;
+  onRequestClose: () => void;
+}
+
+const ImageModal: FC<ImageModalProps> = ({
+  modalIsOpen,
+  onRequestClose,
+  image,
+}) => {
   if (!image) return null;
   return (
     <Modal

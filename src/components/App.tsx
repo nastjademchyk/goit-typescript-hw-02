@@ -3,29 +3,39 @@ import "./App.css";
 import SearchBar from "./SearchBar/SearchBar";
 import Loader from "./Loader/Loader";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
-import fetchImages from "./services/api";
+import { fetchImages, FetchImagesResponse } from "./services/api";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import ImageModal from "./ImageModal/ImageModal";
 import { Toaster, toast } from "react-hot-toast";
 
 function App() {
-  const [loader, setLoader] = useState(false);
-  const [error, setError] = useState(false);
-  const [images, setImages] = useState([]);
-  const [page, setPage] = useState(1);
-  const [query, setQuery] = useState("");
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [totalPages, setTotalPages] = useState(0);
+  const [loader, setLoader] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [images, setImages] = useState<Image[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [query, setQuery] = useState<string>("");
+  const [loadingMore, setLoadingMore] = useState<boolean>(false);
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
+  const [totalPages, setTotalPages] = useState<number>(0);
 
-  const handleImageSubmit = async (query) => {
+  interface Image {
+    id: string;
+    urls: {
+      small: string;
+      regular: string;
+    };
+    description: string;
+    likes: number;
+  }
+
+  const handleImageSubmit = async (query: string): Promise<void> => {
     setImages([]);
     setError(false);
     setLoader(true);
     setPage(1);
-    const result = await fetchImages(query, 1);
+    const result: FetchImagesResponse = await fetchImages(query, 1);
     setLoader(false);
 
     if (result.success) {
@@ -44,7 +54,7 @@ function App() {
     }
 
     setLoadingMore(true);
-    const result = await fetchImages(query, page + 1);
+    const result: FetchImagesResponse = await fetchImages(query, page + 1);
     setLoadingMore(false);
 
     if (result.success) {
@@ -65,7 +75,7 @@ function App() {
     setSelectedImage(null);
   };
 
-  const handleImageClick = (image) => {
+  const handleImageClick = (image: Image) => {
     setSelectedImage(image);
     setModalIsOpen(true);
   };

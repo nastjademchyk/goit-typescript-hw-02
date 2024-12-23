@@ -1,18 +1,20 @@
-import React from "react";
+import React, { FC, useState, useRef, FormEvent } from "react";
 import s from "./SearchBar.module.css";
 import { MdOutlineImageSearch } from "react-icons/md";
-import fetchImages from "../services/api";
-import { useState, useRef } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-const SearchBar = ({ onSubmit }) => {
-  const [query, setQuery] = useState("");
-  const formRef = useRef();
-  const handleChange = (evt) => {
-    setQuery(evt.target.value);
+interface SearchBarProps {
+  onSubmit: (query: string) => void;
+}
+
+const SearchBar: FC<SearchBarProps> = ({ onSubmit }) => {
+  const [query, setQuery] = useState<string>("");
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const handleChange = (evt: FormEvent<HTMLInputElement>) => {
+    setQuery(evt.currentTarget.value);
   };
 
-  const handleSubmit = async (evt) => {
+  const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (query.trim() === "") {
       toast.error("Please enter a search term.");
@@ -20,7 +22,9 @@ const SearchBar = ({ onSubmit }) => {
     }
     onSubmit(query);
     setQuery("");
-    formRef.current.reset();
+    if (formRef.current) {
+      formRef.current.reset();
+    }
   };
 
   return (
